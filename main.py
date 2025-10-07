@@ -33,6 +33,16 @@ class EncryptedText(ABC):
     def get_raw_text(self) -> str:
         return self.text
 
+    def get_info(self) -> str:
+        return (
+            f"type: {self.__class__.__name__}, "
+            f"owner: {self.owner_name}, "
+            f"date: {self.date}, "
+            f"original: {self.text}, "
+            f"encrypted: {getattr(self, 'encrypted_text', '')}, "
+            f"decrypted: {self.decrypt()}"
+        )
+
 
 class SubstitutionCipher(EncryptedText):
     def __init__(
@@ -75,12 +85,8 @@ class SubstitutionCipher(EncryptedText):
         return "".join(result)
 
     def print(self) -> None:
-        decrypted = self.decrypt()
-        print(
-            f"SUBSTITUTION: owner='{self.owner_name}', "
-            f"date='{self.date}', original='{self.text}', "
-            f"encrypted='{self.encrypted_text}', decrypted='{decrypted}'"
-        )
+        info = self.get_info()
+        print(f"SUBSTITUTION: {info}")
 
 
 class ShiftCipher(EncryptedText):
@@ -122,12 +128,9 @@ class ShiftCipher(EncryptedText):
         return "".join(result)
 
     def print(self) -> None:
-        decrypted = self.decrypt()
-        print(
-            f"SHIFT: owner='{self.owner_name}', date='{self.date}', "
-            f"shift={self.shift_value}, original='{self.text}', "
-            f"encrypted='{self.encrypted_text}', decrypted='{decrypted}'"
-        )
+        info = self.get_info()
+        shift_info = f", shift: {self.shift_value}"
+        print(f"SHIFT: {info}{shift_info}")
 
 
 class CommandProcessor:
