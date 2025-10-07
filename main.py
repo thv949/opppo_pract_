@@ -3,6 +3,26 @@ from abc import ABC, abstractmethod
 from typing import List, Tuple, Optional
 
 
+class CharProcessor:
+    @staticmethod
+    def process_char_case(original_char: str, processed_char: str) -> str:
+        return processed_char.upper() if original_char.isupper() \
+            else processed_char
+
+    @staticmethod
+    def get_char_base(char: str) -> int:
+        return ord("A") if char.isupper() else ord("a")
+
+    @staticmethod
+    def shift_char(char: str, shift: int) -> str:
+        if not char.isalpha():
+            return char
+
+        base = CharProcessor.get_char_base(char)
+        shifted_char = chr((ord(char) - base + shift) % 26 + base)
+        return shifted_char
+
+
 class EncryptedText(ABC):
     def __init__(self, text: str, owner_name: str, date: str) -> None:
         self.text = text
@@ -64,8 +84,9 @@ class SubstitutionCipher(EncryptedText):
             if char.lower() in self.source_alphabet:
                 pos = self.source_alphabet.index(char.lower())
                 encrypted_char = self.target_alphabet[pos]
-                if char.isupper():
-                    encrypted_char = encrypted_char.upper()
+                encrypted_char = CharProcessor.process_char_case(
+                    char, encrypted_char
+                )
                 result.append(encrypted_char)
             else:
                 result.append(char)
@@ -77,8 +98,9 @@ class SubstitutionCipher(EncryptedText):
             if char.lower() in self.target_alphabet:
                 pos = self.target_alphabet.index(char.lower())
                 decrypted_char = self.source_alphabet[pos]
-                if char.isupper():
-                    decrypted_char = decrypted_char.upper()
+                decrypted_char = CharProcessor.process_char_case(
+                    char, decrypted_char
+                )
                 result.append(decrypted_char)
             else:
                 result.append(char)
@@ -104,27 +126,15 @@ class ShiftCipher(EncryptedText):
     def encrypt(self) -> str:
         result = []
         for char in self.text:
-            if char.isalpha():
-                base = ord("A") if char.isupper() else ord("a")
-                encrypted_char = chr(
-                    (ord(char) - base + self.shift_value) % 26 + base
-                )
-                result.append(encrypted_char)
-            else:
-                result.append(char)
+            encrypted_char = CharProcessor.shift_char(char, self.shift_value)
+            result.append(encrypted_char)
         return "".join(result)
 
     def decrypt(self) -> str:
         result = []
         for char in self.encrypted_text:
-            if char.isalpha():
-                base = ord("A") if char.isupper() else ord("a")
-                decrypted_char = chr(
-                    (ord(char) - base - self.shift_value) % 26 + base
-                )
-                result.append(decrypted_char)
-            else:
-                result.append(char)
+            decrypted_char = CharProcessor.shift_char(char, -self.shift_value)
+            result.append(decrypted_char)
         return "".join(result)
 
     def print(self) -> None:
