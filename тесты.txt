@@ -1,0 +1,42 @@
+# Тест базовых операций ADD, PRINT, REM
+ADD SUBSTITUTION "Hello World" Ivan 2024-05-20 "abcdefghijklmnopqrstuvwxyz" "zyxwvutsrqponmlkjihgfedcba"
+ADD SHIFT "Python Programming" Anna 2024-05-21 5
+PRINT
+REM owner == Ivan
+PRINT
+
+
+# Тестирование различных условий удаления
+
+ADD SUBSTITUTION "Short" User1 2024-01-01 "abc" "xyz"
+ADD SHIFT "Medium Text" User2 2024-02-15 7
+ADD SUBSTITUTION "Very Long Text Here" User3 2024-03-20 "abcdefghijklmnopqrstuvwxyz" "mlkjihgfedcbazyxwvutsrqpon"
+ADD SHIFT "Another" User1 2024-04-10 3
+PRINT
+REM length < 10
+PRINT
+REM owner == User1
+PRINT
+REM date == 2024-03-20
+PRINT
+
+
+
+# Тест с различными символами и регистром
+
+ADD SUBSTITUTION "Hello WORLD 123!" Alex 2024-05-22 "abcdefghijklmnopqrstuvwxyz" "zyxwvutsrqponmlkjihgfedcba"
+ADD SHIFT "Secret: ABCxyz 789" Maria 2024-05-23 13
+ADD SUBSTITUTION "Test with numbers 123 and symbols !@#" Peter 2024-05-24 "abcdefghijklmnopqrstuvwxyz123!@#" "zyxwvutsrqponmlkjihgfedcba321#@!"
+PRINT
+
+
+# Тестирование базовое
+
+ADD SUBSTITUTION "Hello world!" Ivan 2024-05-20 "abcdefghijklmnopqrstuvwxyz" "zyxwvutsrqponmlkjihgfedcba"
+ADD SHIFT "Secret Message" Anna 2024-05-21 3
+ADD SUBSTITUTION "Test Text" Peter 2024-05-22 "abcdefghijklmnopqrstuvwxyz" "qwertyuiopasdfghjklzxcvbnm"
+PRINT
+REM owner == Ivan
+PRINT
+REM length > 9
+PRINT	

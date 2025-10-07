@@ -1,0 +1,4 @@
+ADD SUBSTITUTION "Hello WORLD 123!" Alex 2024-05-22 "abcdefghijklmnopqrstuvwxyz" "zyxwvutsrqponmlkjihgfedcba"
+ADD SHIFT "Secret: ABCxyz 789" Maria 2024-05-23 13
+ADD SUBSTITUTION "Test with numbers 123 and symbols !@#" Peter 2024-05-24 "abcdefghijklmnopqrstuvwxyz123!@#" "zyxwvutsrqponmlkjihgfedcba321#@!"
+PRINT
